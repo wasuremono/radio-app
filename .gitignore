@@ -1,0 +1,9 @@
+# Build folders
+build/
+.gradle/
+
+# Bloody macs
+.DS_Store
+
+# Gradle settings
+local.properties

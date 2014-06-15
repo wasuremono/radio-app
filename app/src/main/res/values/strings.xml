@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">R/a/dio</string>
+    <string-array name="app_menu">
+        <item>Home</item>
+        <item>News</item>
+        <item>Request</item>
+        <item>Submit</item>
+    </string-array>
+    <string name="action_search">Search</string>
+    <string name="search_not_available">Sorry, Search isn\'t available yet</string>
+    <string name="drawer_open">Open Navigation Drawer</string>
+    <string name="drawer_close">Close Navigation Drawer</string>
+</resources>

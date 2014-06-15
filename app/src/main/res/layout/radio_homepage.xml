@@ -1,0 +1,167 @@
+<!-- The main content view -->
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/backgroundImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/testimage" />
+
+            <LinearLayout
+                android:id="@+id/main_PlayBar"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:background="#d9ffffff"
+                android:weightSum="4"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/player_play"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/av_play"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/main_DjName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_above="@+id/main_SongProgress"
+                    android:layout_centerHorizontal="true"
+                    android:text="AFK Streamer"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#ff000000"
+                    android:gravity="center"
+                    android:layout_weight="2" />
+
+                
+
+                <LinearLayout
+                    android:id="@+id/player_wrapper_right"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:weightSum="4">
+
+                    <ImageView
+                        android:id="@+id/main_DjImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_launcher"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/main_ListenerCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/main_SongProgress"
+                        android:layout_centerHorizontal="true"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ff000000"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/main_SongLength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/main_SongProgress"
+                android:layout_centerHorizontal="true"
+                android:shadowColor="#9f000000"
+                android:shadowDx="3.0"
+                android:shadowDy="3.0"
+                android:shadowRadius="3.0"
+                android:text="1:20 / 5:30"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff" />
+
+            <ProgressBar
+                android:id="@+id/main_SongProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/main_PlayBar"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="-7dp"
+                android:indeterminate="false" />
+
+            <ViewFlipper
+                android:id="@+id/player_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/main_SongLength"
+                android:layout_centerHorizontal="true"
+                android:flipInterval="2" >
+
+                <LinearLayout
+                    android:id="@+id/player_page_current"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/linearLayout"
+                    android:orientation="vertical"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp" >
+
+                    <TextView
+                        android:id="@+id/main_SongName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="#9f000000"
+                        android:shadowDx="3.0"
+                        android:shadowDy="3.0"
+                        android:shadowRadius="3.0"
+                        android:text="Song"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#ffffff"
+                        android:textSize="22dp" />
+                    
+                    <TextView
+                        android:id="@+id/main_ArtistName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:alpha="0.8"
+                        android:gravity="center_horizontal"
+                        android:shadowColor="#9f000000"
+                        android:shadowDx="3.0"
+                        android:shadowDy="3.0"
+                        android:shadowRadius="3.0"
+                        android:text="Artist"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+                    
+                    <io.radio.streamer.views.FXView
+                        android:id="@+id/audioFxView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="#00000000" >
+                    </io.radio.streamer.views.FXView>
+                    
+                </LinearLayout>
+            </ViewFlipper>
+        </RelativeLayout>

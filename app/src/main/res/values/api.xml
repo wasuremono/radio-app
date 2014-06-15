@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base API URL -->
+    <string name="api_root">https://r-a-d.io/api</string>
+
+    <!-- DJ Image Loader (GET) -->
+    <string name="api_dj_image">/dj-image/%s</string>
+
+    <!-- Stream URL (default) -->
+    <string name="api_stream_url">https://stream.r-a-d.io/main.mp3</string>
+</resources>
