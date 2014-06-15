@@ -1,9 +1,24 @@
 # Build folders
 build/
 .gradle/
+.idea/workspace.xml
 
 # Bloody macs
 .DS_Store
+Thumbs.db
 
 # Gradle settings
 local.properties
+
+# Eclipse
+bin/
+gen/
+*.dex
+.classpath
+.project
+*.class
+
+# APKs
+*.apk
+*.ap_
+
