@@ -228,6 +228,7 @@ public class MainActivity extends Activity {
         songProgressBar = (ProgressBar) findViewById(R.id.main_SongProgress);
         listeners = (TextView) findViewById(R.id.main_ListenerCount);
         songLength = (TextView) findViewById(R.id.main_SongLength);
+        playButton = (ImageButton) findViewById(R.id.player_play);
     }
 
     private void initializeSideBar() {
