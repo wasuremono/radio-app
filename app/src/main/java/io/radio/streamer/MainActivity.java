@@ -101,17 +101,18 @@ public class MainActivity extends Activity {
     public static String PREFS_FILENAME = "RADIOPREFS";
 
     RadioService service;
+    private static Packet packet;
     private TextView title;
     private TextView artist;
     private TextView dj;
     private ProgressBar songProgressBar;
     private Timer progressTimer;
-    private Timer npTimer;
+    private Timer apiTimer;
     private ImageView djImage;
     private TextView listeners;
     private TextView songLength;
-    private int progress;
-    private int length;
+    private static int progress;
+    private static int length;
     private ImageButton playButton;
     private ImageButton shareButton;
     private ImageButton searchButton;
@@ -140,13 +141,10 @@ public class MainActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == Util.NPUPDATE) {
-                Packet packet = (Packet) msg.obj;
-                MainActivity.this.updateNP(packet);
+                // ignore
             }
             if (msg.what == Util.PROGRESSUPDATE) {
-                progress++;
-                songProgressBar.setProgress(progress);
-                songLength.setText(Util.formatSongLength(progress, length));
+                updateProgress();
             }
             if (msg.what == Util.MUSICSTART) {
                 audioManager
@@ -201,7 +199,7 @@ public class MainActivity extends Activity {
         // Get the fxView
         fxView = (FXView) findViewById(R.id.audioFxView);
 
-        Timer apiTimer = new Timer();
+        apiTimer = new Timer();
         apiTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -213,6 +211,42 @@ public class MainActivity extends Activity {
             }
         }, 0, 10000);
 
+        progressTimer = new Timer();
+        progressTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    Message m = new Message();
+                    m.what = Util.PROGRESSUPDATE;
+
+                    mMessenger.send(m);
+
+                } catch (Exception e) {
+                    Log.e("api", "exception", e);
+                }
+            }
+        }, 0, 1000);
+    }
+
+    protected void updateProgress() {
+        if (this.songProgressBar == null) {
+            return;
+        }
+
+        this.progress++;
+        this.songProgressBar.setProgress(this.progress);
+
+        this.songLength.setText(Util.formatSongLength(this.progress, this.length));
+    }
+
+    public void setPacket(Packet mPacket) {
+
+        ((ProgressBar) findViewById(R.id.main_SongProgress)).setMax(mPacket.main.length);
+        ((ProgressBar) findViewById(R.id.main_SongProgress)).setProgress(mPacket.main.progress);
+
+        progress = mPacket.main.progress;
+        length = mPacket.main.length;
+        packet = mPacket;
     }
 
     private void updateApiData() {
@@ -276,6 +310,7 @@ public class MainActivity extends Activity {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             ComponentName eventReceiver = new ComponentName(getPackageName(),
                     RemoteControlReceiver.class.getName());
+
             audioManager.registerMediaButtonEventReceiver(eventReceiver);
             Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
             mediaButtonIntent.setComponent(eventReceiver);
@@ -295,6 +330,9 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        apiTimer.cancel();
+        progressTimer.cancel();
     }
 
     private void updatePlayButton() {

@@ -16,14 +16,15 @@ import java.security.KeyStore;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import io.radio.streamer.MainActivity;
 import io.radio.streamer.R;
 
 
 public class API {
     private static final String BASE_URL = "https://r-a-d.io/api";
-    private Activity activity;
+    private MainActivity activity;
 
-    public API(String url, Activity instance) {
+    public API(String url, MainActivity instance) {
         this.activity = instance;
 
         try {
@@ -68,10 +69,12 @@ public class API {
             ((TextView) activity.findViewById(R.id.main_SongName)).setText(packet.main.title);
             ((TextView) activity.findViewById(R.id.main_ArtistName)).setText(packet.main.artist);
             ((TextView) activity.findViewById(R.id.main_DjName)).setText(packet.main.dj.name);
+            ((TextView) activity.findViewById(R.id.main_SongLength))
+                    .setText(Util.formatSongLength(packet.main.progress, packet.main.length));
+
+            activity.setPacket(packet);
 
             try {
-                ((TextView) activity.findViewById(R.id.main_SongLength))
-                        .setText(Util.formatSongLength(packet.main.progress, packet.main.length));
                 ((TextView) activity.findViewById(R.id.main_ListenerCount))
                         .setText(packet.main.listeners);
             } catch (Exception e) {
